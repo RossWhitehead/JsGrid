@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="grid"></div>
+    <script lang="javascript" src="node_modules/jquery/dist/jQuery.js"></script>
+    <script lang="javascript" src="jsGrid.js"></script>
+    <script lang="javascript">
+        var config = { 
+            columns: [
+                "Id", 
+                "First name", 
+                "Last name"
+            ],
+            data: [
+                [ 1, "Ross", "Whitehead" ],
+                [ 2, "John", "Smith" ],
+            ] };
+        $("#grid").jsGrid(config);
+    </script>
+</body>
+</html>
