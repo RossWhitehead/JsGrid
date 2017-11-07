@@ -8,6 +8,7 @@
 <body>
     <div id="grid"></div>
     <script lang="javascript" src="node_modules/jquery/dist/jQuery.js"></script>
+    <script lang="javascript" src="string.js"></script>
     <script lang="javascript" src="jsGrid.js"></script>
     <script lang="javascript">
         var config = { 
@@ -19,7 +20,8 @@
             data: [
                 [ 1, "Ross", "Whitehead" ],
                 [ 2, "John", "Smith" ],
-            ] };
+            ],
+            pageSize: 2 };
         $("#grid").jsGrid(config);
     </script>
 </body>
