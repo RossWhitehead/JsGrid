@@ -3,6 +3,16 @@
 
 (function ($) {
 
+    var defaultConfig = {
+        paging: {
+            enabled: false,
+            pageSize: 2
+        }
+    };
+
+    const previousButtonId = 'previous-button';
+    const nextButtonId = 'next-button';
+
     const TEMPLATE = {
         TABLE: '<table>',
         THEAD: '<thead>',
@@ -11,13 +21,14 @@
         TR: '<tr>',
         TD: '<td>{0}</td>',
         PAGE: '<span>Page {0}</span>',
-        NEXT_BUTTON: '<button id="next-button">Next</button>',
-        PREVIOUS_BUTTON: '<button id="previous-button">Previous</button>'
+        NEXT_BUTTON: String.format('<button id="{0}">Next</button>', nextButtonId),
+        PREVIOUS_BUTTON: String.format('<button id="{0}">Previous</button>', previousButtonId)
     };
 
     $.fn.jsGrid = function (config) {
-        console.log("start");
+        $.extend( config, defaultConfig );
         renderGrid(config, $(this), 0);
+        
     };
 
     function renderGrid(config, $grids, page) {
@@ -36,8 +47,8 @@
                 $thead.append(String.format(TEMPLATE.TH, config.columns[col]));
             }
 
-            var pageStartRow = page * config.pageSize;
-            var pageEndRow = Math.min(pageStartRow + config.pageSize, rowCount);
+            var pageStartRow = page * config.paging.pageSize;
+            var pageEndRow = Math.min(pageStartRow + config.paging.pageSize, rowCount);
 
             for (row = pageStartRow; row < pageEndRow; row++) {
                 var $row = $(TEMPLATE.TR);
@@ -53,21 +64,22 @@
 
             $this.append(String.format(TEMPLATE.PAGE, page + 1));
 
+            // Paging buttons
             if (page > 0) {
                 var $previousButton = $(TEMPLATE.PREVIOUS_BUTTON);
-                $this.on('click', '#previous-button', function () {
+                $this.on('click', String.format('#{0}', previousButtonId), function () {
                     renderGrid(config, $this, page - 1);
                 });
-                
+
                 $this.append($previousButton);
             }
 
             if (rowCount > pageEndRow) {
                 var $nextButton = $(TEMPLATE.NEXT_BUTTON);
-                $this.on('click', '#next-button', function () {
+                $this.on('click', String.format('#{0}', nextButtonId), function () {
                     renderGrid(config, $this, page + 1);
                 });
-                
+
                 $this.append($nextButton);
             }
         });
