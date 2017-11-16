@@ -5,18 +5,25 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
 </head>
 
 <body>
-    <div id="grid"></div>
+    <div class="container">
+        <div id="grid"></div>
+        <div id="form"></div>
+    </div>
     <script lang="javascript" src="node_modules/jquery/dist/jQuery.js"></script>
     <script lang="javascript" src="string.js"></script>
     <script lang="javascript" src="jsGrid.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script lang="javascript" src="jsForm.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
     <script lang="javascript">
-        var config = {
+        var gridConfig = {
             columns: [
                 "Id",
                 "First name",
@@ -34,7 +41,17 @@
                 pageSize: 2
             }
         };
-        $("#grid").jsGrid(config);
+        $("#grid").jsGrid(gridConfig);
+
+        var formConfig = {
+            fields: [
+                { name: "id", displayName: "Id", type: "text" },
+                { name: "firstName", displayName: "First name", type: "text" },
+                { name: "lastName", displayName: "Last name", type: "text" }
+            ]
+        };
+        $("#form").jsForm(formConfig);
+        $("#form").show();
     </script>
 </body>
 

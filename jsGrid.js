@@ -1,7 +1,7 @@
 /// <reference path="node_modules/jquery/dist/jQuery.js" />
 /// <reference path="string.js" />
 
-(function ($) {
+(function (jsGrid, $) {
 
     const defaultConfig = {
         paging: {
@@ -22,8 +22,8 @@
         TD: '<td>{0}</td>',
         PAGE: '<span>Page {0}</span>',
         PAGING_BUTTONS: '<div>',
-        NEXT_BUTTON: String.format('<button id="{0}">Next</button>', nextButtonId),
-        PREVIOUS_BUTTON: String.format('<button id="{0}">Previous</button>', previousButtonId)
+        NEXT_BUTTON: String.format('<button id="{0}" class="btn btn-default">Next</button>', nextButtonId),
+        PREVIOUS_BUTTON: String.format('<button id="{0}" class="btn btn-default">Previous</button>', previousButtonId)
     };
 
     var $container = null;
@@ -116,4 +116,4 @@
         }
     }
 
-})(jQuery);
+})(window.jsForm = window.jsForm || {}, jQuery);
