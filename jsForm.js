@@ -13,15 +13,12 @@
                         <label for="{0}">{1}</label>
                         {2}
                      </div>`,
+        INPUT_CHECKBOX: '<input type="text" class="form-control" name="{0}">',
+        INPUT_HIDDEN: '<input type="text" class="form-control" name="{0}">',        
         INPUT_TEXT: '<input type="text" class="form-control" name="{0}">',
-        BUTTON_GROUP: `<div class="form-group">
-                         <div class="col-sm-offset-2 col-sm-10">
-                           {0}
-                         </div>
-                      </div>`,
         SAVE_BUTTON: `<div class="form-group">
                          <div class="col-sm-offset-2 col-sm-10">
-                            <button type="button" class="btn btn-default" onclick="jsForm.save()">Save</button>
+                            <button type="button" class="btn btn-default" onclick="jsForm.save('{0}')">Save</button>
                          </div>
                       </div>`
     };
@@ -47,15 +44,17 @@
                 $form.append($formGroup);
             }
 
-            $form.append(TEMPLATE.SAVE_BUTTON);
+            $form.append(String.format(TEMPLATE.SAVE_BUTTON, config.postUrl));
 
             $container.append($form);
         });
     }
 
-    jsForm.save = function() {
-        console.log("save");
-        return false;
+    jsForm.save = function(postUrl) {
+        var $form = $(event.target).closest('form');
+        var data = $form.serialize();
+        $.post(postUrl, data);
+        console.log(data);
     }
 
 })(window.jsForm = window.jsForm || {}, jQuery);
