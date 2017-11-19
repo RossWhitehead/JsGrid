@@ -15,6 +15,7 @@
     <div class="container">
         <div id="grid"></div>
         <div id="form"></div>
+        <div class="test"><span></span></div>
     </div>
     <script lang="javascript" src="node_modules/jquery/dist/jQuery.js"></script>
     <script lang="javascript" src="string.js"></script>
@@ -23,12 +24,35 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     <script lang="javascript">
+        var formConfig = {
+            fields: [
+                { name: "id", displayName: "Id", type: "text" },
+                { name: "firstName", displayName: "First name", type: "text" },
+                { name: "lastName", displayName: "Last name", type: "text" }
+            ],
+            post: {
+                url: "http://www.hdgdhfjdf.com/person/create",
+                success: function () {
+                    console.log("posted");
+                }
+            }
+        };
+        var editForm = $("#form").jsForm(formConfig);
+
         var gridConfig = {
             columns: [
                 "Id",
                 "First name",
                 "Last name"
             ],
+            actions: {
+                edit: {
+                    enabled: true,
+                    action: function(row){
+                        editForm.edit(row);
+                    }
+                }
+            },
             data: [
                 [1, "Ross", "Whitehead"],
                 [2, "John", "Smith"],
@@ -43,16 +67,13 @@
         };
         $("#grid").jsGrid(gridConfig);
 
-        var formConfig = {
-            fields: [
-                { name: "id", displayName: "Id", type: "text" },
-                { name: "firstName", displayName: "First name", type: "text" },
-                { name: "lastName", displayName: "Last name", type: "text" }
-            ],
-            postUrl: "http://www.hdgdhfjdf.com/person/create"
-        };
-        $("#form").jsForm(formConfig);
-        $("#form").show();
+        var $test = $('div.test');
+        console.log($test);
+        $('.container').append('<div class="test"></div>');
+        console.log($test);
+        var $test2 =  $('div.test');
+        console.log($test2);
+
     </script>
 </body>
 

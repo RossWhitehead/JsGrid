@@ -23,7 +23,8 @@
         PAGE: '<span>Page {0}</span>',
         PAGING_BUTTONS: '<div>',
         NEXT_BUTTON: String.format('<button id="{0}" class="btn btn-default">Next</button>', nextButtonId),
-        PREVIOUS_BUTTON: String.format('<button id="{0}" class="btn btn-default">Previous</button>', previousButtonId)
+        PREVIOUS_BUTTON: String.format('<button id="{0}" class="btn btn-default">Previous</button>', previousButtonId),
+        EDIT_BUTTON: '<button id="{0}" class="btn btn-default" data-row-number="{1}">Edit</button>'
     };
 
     var $container = null;
@@ -70,6 +71,9 @@
         for (col = 0; col < config.columns.length; col++) {
             $thead.append(String.format(TEMPLATE.TH, config.columns[col]));
         }
+        if(config.actions.edit.enabled === true){
+            $thead.append(String.format(TEMPLATE.TH, "Actions"));
+        }
     }
 
     function renderBody(config, page) {
@@ -83,6 +87,23 @@
             var $row = $(TEMPLATE.TR);
             for (col = 0; col < config.columns.length; col++) {
                 $row.append(String.format(TEMPLATE.TD, config.data[row][col]));
+            }
+            if(config.actions.edit.enabled === true){
+                var id = "edit" + row;
+                var $td = $(String.format(TEMPLATE.TD, ""));
+                var $editButton = $(String.format(TEMPLATE.EDIT_BUTTON, id, row));
+                $container.on('click', '#' + id, function () {
+                    if ($.isFunction(config.actions.edit.action)) {
+                        console.log(event.target);
+                        var rowNumber = $(event.target).data("row-number");
+                        config.actions.edit.action(config.data[rowNumber]);
+                    }
+                    else{
+                        console.log("config.post.edit.action must be a function");
+                    }
+                });
+                $td.append($editButton);
+                $row.append($td);
             }
             $tbody.append($row);
         }
