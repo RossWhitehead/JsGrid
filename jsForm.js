@@ -25,15 +25,10 @@
 
     function Form(config) {
         this.config = config; 
-        this.controls = [];
         this.edit = function (row) {
-            console.log(row);
-            $.each(self.controls, function(index, value){
-                console.log("Before:" + value.val());
-            });
-            $.each(row, function(index, value){
-                self.controls[index].val(value); 
-                console.log("After:" + self.controls[index].val());
+            var $inputs = $('form input[type="text"]');
+            $.each($inputs, function(index){
+                $(this).attr("value", row[index]);
             });
             $container.show();
         };
@@ -51,7 +46,6 @@
 
                 for (var i = 0; i < config.fields.length; i++) {
                     var input = String.format(TEMPLATE.INPUT_TEXT, config.fields[i].name);
-                    self.controls.push($(input));
                     var $formGroup = $(String.format(TEMPLATE.FORM_GROUP, config.fields[i].name, config.fields[i].displayName, input));
                     $form.append($formGroup);
                 }
