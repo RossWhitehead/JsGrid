@@ -5,10 +5,9 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="jsGrid.css">
 </head>
 
 <body>
@@ -21,18 +20,26 @@
     <script lang="javascript" src="string.js"></script>
     <script lang="javascript" src="jsGrid.js"></script>
     <script lang="javascript" src="jsForm.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script lang="javascript">
         var formConfig = {
-            fields: [
-                { name: "id", displayName: "Id", type: "text" },
-                { name: "firstName", displayName: "First name", type: "text" },
-                { name: "lastName", displayName: "Last name", type: "text" }
-            ],
+            title: "Edit customer",
+            fields: [{
+                name: "id",
+                displayName: "Id",
+                type: jsForm.controlType.readonly
+            }, {
+                name: "firstName",
+                displayName: "First name",
+                type: jsForm.controlType.text
+            }, {
+                name: "lastName",
+                displayName: "Last name",
+                type: jsForm.controlType.text
+            }],
             post: {
                 url: "http://www.hdgdhfjdf.com/person/create",
-                success: function () {
+                success: function() {
                     console.log("posted");
                 }
             }
@@ -48,7 +55,7 @@
             actions: {
                 edit: {
                     enabled: true,
-                    action: function(row){
+                    action: function(row) {
                         editForm.edit(row);
                     }
                 }
@@ -71,9 +78,8 @@
         console.log($test);
         $('.container').append('<div class="test"></div>');
         console.log($test);
-        var $test2 =  $('div.test');
+        var $test2 = $('div.test');
         console.log($test2);
-
     </script>
 </body>
 
