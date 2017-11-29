@@ -65,8 +65,8 @@
             var $modalBackdrop = $(TEMPLATE.MODAL_BACKDROP);
             $formContainer.append($modalBackdrop);
 
-            var formPanel = $.parseHTML(TEMPLATE.FORM_PANEL);
-            $formContainer.append(formPanel);
+            var $formPanel = $.parseHTML(TEMPLATE.FORM_PANEL);
+            $formContainer.append($formPanel);
             var $panelBody = $formContainer.find('.panel-body');
 
             var $form = $(TEMPLATE.FORM);

@@ -1,7 +1,7 @@
 /// <reference path="node_modules/jquery/dist/jQuery.js" />
 /// <reference path="string.js" />
 
-(function (jsGrid, $) {
+(function(jsGrid, $) {
 
     const defaultConfig = {
         paging: {
@@ -14,6 +14,23 @@
     const nextButtonId = 'next-button';
 
     const TEMPLATE = {
+        TABLE_PANEL: `<div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-primary list-panel" id="list-panel">
+                <div class="panel-heading list-panel-heading">
+                    <h3 class="panel-title list-panel-title">Products</h3>
+                    <button type="button" class="btn btn-default btn-md refresh-button" data-bind="click: get">
+                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh</button>
+                </div>
+                <div class="panel-body"></div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-primary btn-md" data-bind="click: add">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>
+                </div>
+                <img src="~/Content/Images/ajax-loader gif" class="loading-indicator" id="loading-indicator" />
+            </div>
+        </div>
+    </div>`,
         TABLE: '<table class="table">',
         THEAD: '<thead>',
         TBODY: '<tbody>',
@@ -33,7 +50,7 @@
     var $tbody = $(TEMPLATE.TBODY);
     var $pagingButtons = $(TEMPLATE.PAGING_BUTTONS);
 
-    $.fn.jsGrid = function (config) {
+    $.fn.jsGrid = function(config) {
         $.extend(config, defaultConfig);
         initialize(config, $(this), 0);
     };
@@ -41,7 +58,7 @@
     function initialize(config, $grids, page) {
         const rowCount = config.data.length;
 
-        $.each($grids, function () {
+        $.each($grids, function() {
             $container = $(this);
 
             // Make sure that the previous guests have left the room before renting it out.
@@ -53,11 +70,17 @@
             $table.append($thead);
 
             // Render body
-            var page = 0;           
+            var page = 0;
             renderBody(config, page);
             $table.append($tbody);
-            
-            $container.append($table);
+
+            // Render table panel and insert table
+            var tablePanel = $.parseHTML(TEMPLATE.TABLE_PANEL);
+            $container.append(tablePanel);
+            var $panelBody = $container.find('.panel-body');
+            $panelBody.append($table);
+
+            console.log($tablePanel);
 
             // Render the paging buttons
             renderPagingButtons(config, page);
@@ -71,7 +94,7 @@
         for (col = 0; col < config.columns.length; col++) {
             $thead.append(String.format(TEMPLATE.TH, config.columns[col]));
         }
-        if(config.actions.edit.enabled === true){
+        if (config.actions.edit.enabled === true) {
             $thead.append(String.format(TEMPLATE.TH, "Actions"));
         }
     }
@@ -88,17 +111,16 @@
             for (col = 0; col < config.columns.length; col++) {
                 $row.append(String.format(TEMPLATE.TD, config.data[row][col]));
             }
-            if(config.actions.edit.enabled === true){
+            if (config.actions.edit.enabled === true) {
                 var id = "edit" + row;
                 var $td = $(String.format(TEMPLATE.TD, ""));
                 var $editButton = $(String.format(TEMPLATE.EDIT_BUTTON, id, row));
-                $container.on('click', '#' + id, function () {
+                $container.on('click', '#' + id, function() {
                     if ($.isFunction(config.actions.edit.action)) {
                         console.log(event.target);
                         var rowNumber = $(event.target).data("row-number");
                         config.actions.edit.action(config.data[rowNumber]);
-                    }
-                    else{
+                    } else {
                         console.log("config.post.edit.action must be a function");
                     }
                 });
@@ -118,7 +140,7 @@
 
         if (page > 0) {
             var $previousButton = $(TEMPLATE.PREVIOUS_BUTTON);
-            $container.on('click', String.format('#{0}', previousButtonId), function () {
+            $container.on('click', String.format('#{0}', previousButtonId), function() {
                 renderBody(config, page - 1);
                 renderPagingButtons(config, page - 1);
             });
@@ -128,7 +150,7 @@
 
         if (config.data.length > pageEnd) {
             var $nextButton = $(TEMPLATE.NEXT_BUTTON);
-            $container.on('click', String.format('#{0}', nextButtonId), function () {
+            $container.on('click', String.format('#{0}', nextButtonId), function() {
                 renderBody(config, page + 1);
                 renderPagingButtons(config, page + 1);
             });
