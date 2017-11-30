@@ -13,8 +13,8 @@
 <body>
     <div class="container">
         <div id="grid"></div>
-        <div id="form"></div>
-        <div class="test"><span></span></div>
+        <div id="editForm"></div>
+        <div id="addForm"></div>
     </div>
     <script lang="javascript" src="node_modules/jquery/dist/jQuery.js"></script>
     <script lang="javascript" src="string.js"></script>
@@ -22,7 +22,7 @@
     <script lang="javascript" src="jsForm.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script lang="javascript">
-        var formConfig = {
+        var editFormConfig = {
             title: "Edit customer",
             fields: [{
                 name: "id",
@@ -36,36 +36,74 @@
                 name: "lastName",
                 displayName: "Last name",
                 type: jsForm.controlType.text
+            }, {
+                name: "isRegistered",
+                displayName: "Registered?",
+                type: jsForm.controlType.checkbox
             }],
             post: {
-                url: "http://www.hdgdhfjdf.com/person/create",
+                url: "http://www.hdgdhfjdf.com/person/edit",
                 success: function() {
                     console.log("posted");
                 }
             }
         };
-        var editForm = $("#form").jsForm(formConfig);
+        var editForm = $("#editForm").jsForm(editFormConfig);
+
+        var addFormConfig = {
+            title: "Add customer",
+            fields: [{
+                name: "firstName",
+                displayName: "First name",
+                type: jsForm.controlType.text
+            }, {
+                name: "lastName",
+                displayName: "Last name",
+                type: jsForm.controlType.text
+            }, {
+                name: "isRegistered",
+                displayName: "Registered?",
+                type: jsForm.controlType.checkbox
+            }],
+            post: {
+                url: "http://www.hdgdhfjdf.com/person/create",
+                success: function() {
+                    console.log("putted");
+                }
+            }
+        };
+        var addForm = $("#addForm").jsForm(addFormConfig);
 
         var gridConfig = {
             columns: [
                 "Id",
                 "First name",
-                "Last name"
+                "Last name",
+                "Registered?"
             ],
             actions: {
+                add: {
+                    enabled: true,
+                    action: function() {
+                        addForm.add();
+                    }
+                },
                 edit: {
                     enabled: true,
                     action: function(row) {
                         editForm.edit(row);
                     }
+                },
+                delete: {
+                    enabled: true
                 }
             },
             data: [
-                [1, "Ross", "Whitehead"],
-                [2, "John", "Smith"],
-                [3, "Balony", "Sandwich"],
-                [4, "Harry", "Karry"],
-                [5, "Edward", "Khan"]
+                [1, "Ross", "Whitehead", true],
+                [2, "John", "Smith", false],
+                [3, "Balony", "Sandwich", true],
+                [4, "Harry", "Karry", true],
+                [5, "Edward", "Khan", false]
             ],
             paging: {
                 enabled: true,
@@ -73,13 +111,6 @@
             }
         };
         $("#grid").jsGrid(gridConfig);
-
-        var $test = $('div.test');
-        console.log($test);
-        $('.container').append('<div class="test"></div>');
-        console.log($test);
-        var $test2 = $('div.test');
-        console.log($test2);
     </script>
 </body>
 

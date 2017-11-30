@@ -19,13 +19,13 @@
             <div class="panel panel-primary list-panel" id="list-panel">
                 <div class="panel-heading list-panel-heading">
                     <h3 class="panel-title list-panel-title">Products</h3>
-                    <button type="button" class="btn btn-default btn-md refresh-button" data-bind="click: get">
+                    <button type="button" class="btn btn-default btn-md refresh-button">
                             <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh</button>
                 </div>
                 <div class="panel-body"></div>
                 <div class="panel-footer">
-                    <button type="button" class="btn btn-primary btn-md" data-bind="click: add">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>
+                    <button type="button" class="btn btn-primary btn-md" id="add-button">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>
                 </div>
                 <img src="~/Content/Images/ajax-loader gif" class="loading-indicator" id="loading-indicator" />
             </div>
@@ -80,7 +80,17 @@
             var $panelBody = $container.find('.panel-body');
             $panelBody.append($table);
 
-            console.log($tablePanel);
+            // Add button
+            if (config.actions.add.enabled === true) {
+                $container.on('click', '#add-button', function() {
+                    if ($.isFunction(config.actions.add.action)) {
+                        console.log(event.target);
+                        config.actions.add.action();
+                    } else {
+                        console.log("config.post.add.action must be a function");
+                    }
+                });
+            }
 
             // Render the paging buttons
             renderPagingButtons(config, page);
