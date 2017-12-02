@@ -5,8 +5,10 @@
 
     jsForm.controlType = {
         checkbox: 0,
-        readonly: 1,
-        text: 2
+        radiobutton: 1,
+        readonly: 2,
+        select: 3,
+        text: 4
     }
 
     const defaultConfig = {};
@@ -31,29 +33,55 @@
                 <div class="panel-body"></div>
             </div>`,
         FORM: '<form class="form form-horizontal">',
-        FORM_GROUP: `<div class="form-group">
-                        <label for="{0}">{1}</label>
-                        {2}
-                     </div>`,
-        INPUT_CHECKBOX: '<input type="checkbox" name="{0}">',
-        INPUT_READONLY: '<input type="text" class="form-control" readonly name="{0}">',
-        INPUT_TEXT: '<input type="text" class="form-control" name="{0}" id="{0}">',
-        BUTTON_GROUP: `<div class="form-group">
-                         <div class="col-sm-offset-2 col-sm-10">
-                         </div>
-                      </div>`,
+        INPUT_CHECKBOX: `
+            <div class="checkbox">
+                <label><input type="checkbox" value="" name="{0}" id="{0}">{1}</label>
+            </div>`,
+        INPUT_RADIOBUTTON: `
+            <div class="radio">
+                <label><input type="radio" name="{0}" value="{1}">{2}</label>
+            </div>`,
+        INPUT_READONLY: `
+            <div class="form-group">
+                <label for="{0}">{1}</label>
+                <input type="text" class="form-control" name="{0}" id="{0}" readonly>
+            </div>`,
+        INPUT_SELECT: `
+            <div class="form-group">
+                <label for="{0}">{1}</label>
+                <input type="text" class="form-control" name="{0}" id="{0}" readonly>
+            </div>`,
+        INPUT_TEXT: `
+            <div class="form-group">
+                <label for="{0}">{1}</label>
+                <input type="text" class="form-control" name="{0}" id="{0}">
+            </div>`,
+        BUTTON_GROUP: `
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                </div>
+            </div>`,
         SAVE_BUTTON: '<button type="button" class="btn btn-default save-button">Save</button>'
     };
 
     function ControlFactory() {
-        this.getTemplate = function(type) {
+        this.getTemplate = function(type, name, displayName, options) {
+            var template = null;
             switch (type) {
                 case jsForm.controlType.checkbox:
-                    return TEMPLATE.INPUT_CHECKBOX;
+                    return $(String.format(TEMPLATE.INPUT_CHECKBOX, name, displayName));
+                case jsForm.controlType.radiobutton:
+                    var template = "";
+                    $.each(options, function(index, value) {
+                        template += String.format(TEMPLATE.INPUT_RADIOBUTTON, name, value.value, value.name);
+                    });
+                    return $.parseHTML(template);
                 case jsForm.controlType.readonly:
-                    return TEMPLATE.INPUT_READONLY;
+                    return $(String.format(TEMPLATE.INPUT_READONLY, name, displayName));
+                case jsForm.controlType.select:
+                    return $(String.format(TEMPLATE.INPUT_TEXT, name, displayName));
                 default:
-                    return TEMPLATE.INPUT_TEXT;
+                    return $(String.format(TEMPLATE.INPUT_TEXT, name, displayName));
             }
         }
     }
@@ -106,10 +134,12 @@
             var controlFactory = new ControlFactory();
 
             for (var i = 0; i < config.fields.length; i++) {
-                var inputTemplate = controlFactory.getTemplate(config.fields[i].type);
-                var input = String.format(inputTemplate, config.fields[i].name);
-                var $formGroup = $(String.format(TEMPLATE.FORM_GROUP, config.fields[i].name, config.fields[i].displayName, input));
-                $form.append($formGroup);
+                var $control = controlFactory.getTemplate(
+                    this.config.fields[i].type,
+                    this.config.fields[i].name,
+                    this.config.fields[i].displayName,
+                    this.config.fields[i].options);
+                $form.append($control);
             }
 
             var buttonGroup = $(TEMPLATE.BUTTON_GROUP);
