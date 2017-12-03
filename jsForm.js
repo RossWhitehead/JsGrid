@@ -33,6 +33,10 @@
                 <div class="panel-body"></div>
             </div>`,
         FORM: '<form class="form form-horizontal">',
+        CONTROL_GROUP: `
+            <div class="form-group">
+                <label for="{0}">{1}</label>
+            </div>`,
         INPUT_CHECKBOX: `
             <div class="checkbox">
                 <label><input type="checkbox" value="" name="{0}" id="{0}">{1}</label>
@@ -46,11 +50,8 @@
                 <label for="{0}">{1}</label>
                 <input type="text" class="form-control" name="{0}" id="{0}" readonly>
             </div>`,
-        INPUT_SELECT: `
-            <div class="form-group">
-                <label for="{0}">{1}</label>
-                <input type="text" class="form-control" name="{0}" id="{0}" readonly>
-            </div>`,
+        INPUT_SELECT: '<select class="form-control" name="{0}" id="{0}">',
+        INPUT_SELECT_OPTION: '<option value="{0}">{1}</option>',
         INPUT_TEXT: `
             <div class="form-group">
                 <label for="{0}">{1}</label>
@@ -70,16 +71,25 @@
             switch (type) {
                 case jsForm.controlType.checkbox:
                     return $(String.format(TEMPLATE.INPUT_CHECKBOX, name, displayName));
+
                 case jsForm.controlType.radiobutton:
-                    var template = "";
+                    var $template = $(String.format(TEMPLATE.CONTROL_GROUP, name, displayName));
                     $.each(options, function(index, value) {
-                        template += String.format(TEMPLATE.INPUT_RADIOBUTTON, name, value.value, value.name);
+                        $template.append(String.format(TEMPLATE.INPUT_RADIOBUTTON, name, value.value, value.name));
                     });
-                    return $.parseHTML(template);
+                    return $template;
+
                 case jsForm.controlType.readonly:
                     return $(String.format(TEMPLATE.INPUT_READONLY, name, displayName));
+
                 case jsForm.controlType.select:
-                    return $(String.format(TEMPLATE.INPUT_TEXT, name, displayName));
+                    var $template = $(String.format(TEMPLATE.CONTROL_GROUP, name, displayName));
+                    var $select = $(String.format(TEMPLATE.INPUT_SELECT, name, displayName));
+                    $.each(options, function(index, value) {
+                        $select.append(String.format(TEMPLATE.INPUT_SELECT_OPTION, value.value, value.name));
+                    });
+                    return $template.append($select);
+
                 default:
                     return $(String.format(TEMPLATE.INPUT_TEXT, name, displayName));
             }
