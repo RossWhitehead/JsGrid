@@ -22,137 +22,150 @@
     <script lang="javascript" src="jsForm.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script lang="javascript">
-        var genderOptions = [{
-            value: 1,
-            name: 'Male'
-        }, {
-            value: 2,
-            name: 'Female'
-        }];
+        $(function() {
+            var genderOptions = [{
+                value: 1,
+                name: 'Male'
+            }, {
+                value: 2,
+                name: 'Female'
+            }];
 
-        var ageOptions = [{
-            value: 1,
-            name: 'Under 18'
-        }, {
-            value: 2,
-            name: '18-39'
-        }, {
-            value: 3,
-            name: '40-59'
-        }, {
-            value: 4,
-            name: 'Over 60'
-        }];
+            var ageOptions = [{
+                value: 1,
+                name: 'Under 18'
+            }, {
+                value: 2,
+                name: '18-39'
+            }, {
+                value: 3,
+                name: '40-59'
+            }, {
+                value: 4,
+                name: 'Over 60'
+            }];
 
-        var editFormConfig = {
-            title: "Edit customer",
-            fields: [{
-                name: "id",
-                displayName: "Id",
-                type: jsForm.controlType.readonly
-            }, {
-                name: "firstName",
-                displayName: "First name",
-                type: jsForm.controlType.text
-            }, {
-                name: "lastName",
-                displayName: "Last name",
-                type: jsForm.controlType.text
-            }, {
-                name: "isRegistered",
-                displayName: "Registered?",
-                type: jsForm.controlType.checkbox
-            }, {
-                name: "age",
-                displayName: "Age?",
-                type: jsForm.controlType.select,
-                options: ageOptions
-            }, {
-                name: "gender",
-                displayName: "Gender?",
-                type: jsForm.controlType.radiobutton,
-                options: genderOptions
-            }],
-            post: {
-                url: "http://www.hdgdhfjdf.com/person/edit",
-                success: function() {
-                    console.log("posted");
+            var editFormConfig = {
+                title: "Edit customer",
+                fields: [{
+                    name: "id",
+                    displayName: "Id",
+                    type: jsForm.controlType.readonly
+                }, {
+                    name: "firstName",
+                    displayName: "First name",
+                    type: jsForm.controlType.text
+                }, {
+                    name: "lastName",
+                    displayName: "Last name",
+                    type: jsForm.controlType.text
+                }, {
+                    name: "isRegistered",
+                    displayName: "Registered?",
+                    type: jsForm.controlType.checkbox
+                }, {
+                    name: "age",
+                    displayName: "Age?",
+                    type: jsForm.controlType.select,
+                    options: ageOptions
+                }, {
+                    name: "gender",
+                    displayName: "Gender?",
+                    type: jsForm.controlType.radiobutton,
+                    options: genderOptions
+                }, {
+                    name: "notes",
+                    displayName: "Notes",
+                    type: jsForm.controlType.textArea,
+                    rows: 3
+                }],
+                post: {
+                    url: "http://www.hdgdhfjdf.com/person/edit",
+                    success: function() {
+                        console.log("posted");
+                    }
                 }
-            }
-        };
-        var editForm = $("#editForm").jsForm(editFormConfig);
+            };
+            var editForm = $("#editForm").jsForm(editFormConfig);
 
-        var addFormConfig = {
-            title: "Add customer",
-            fields: [{
-                name: "firstName",
-                displayName: "First name",
-                type: jsForm.controlType.text
-            }, {
-                name: "lastName",
-                displayName: "Last name",
-                type: jsForm.controlType.text
-            }, {
-                name: "isRegistered",
-                displayName: "Registered?",
-                type: jsForm.controlType.checkbox
-            }, {
-                name: "age",
-                displayName: "Age?",
-                type: jsForm.controlType.select,
-                options: ageOptions
-            }, {
-                name: "gender",
-                displayName: "Gender?",
-                type: jsForm.controlType.radiobutton,
-                options: genderOptions
-            }],
-            post: {
-                url: "http://www.hdgdhfjdf.com/person/create",
-                success: function() {
-                    console.log("putted");
+            var addFormConfig = {
+                title: "Add customer",
+                fields: [{
+                    name: "firstName",
+                    displayName: "First name",
+                    type: jsForm.controlType.text
+                }, {
+                    name: "lastName",
+                    displayName: "Last name",
+                    type: jsForm.controlType.text
+                }, {
+                    name: "isRegistered",
+                    displayName: "Registered?",
+                    type: jsForm.controlType.checkbox
+                }, {
+                    name: "age",
+                    displayName: "Age?",
+                    type: jsForm.controlType.select,
+                    options: ageOptions
+                }, {
+                    name: "gender",
+                    displayName: "Gender?",
+                    type: jsForm.controlType.radiobutton,
+                    options: genderOptions
+                }, {
+                    name: "notes",
+                    displayName: "Notes",
+                    type: jsForm.controlType.textArea,
+                    rows: 3
+                }],
+                post: {
+                    url: "http://www.hdgdhfjdf.com/person/create",
+                    success: function() {
+                        console.log("putted");
+                    }
                 }
-            }
-        };
-        var addForm = $("#addForm").jsForm(addFormConfig);
+            };
+            var addForm = $("#addForm").jsForm(addFormConfig);
 
-        var gridConfig = {
-            columns: [
-                "Id",
-                "First name",
-                "Last name",
-                "Registered?"
-            ],
-            actions: {
-                add: {
-                    enabled: true,
-                    action: function() {
-                        addForm.add();
+            var gridConfig = {
+                columns: [
+                    "Id",
+                    "First name",
+                    "Last name",
+                    "Registered?",
+                    "Notes"
+                ],
+                actions: {
+                    add: {
+                        enabled: true,
+                        action: function() {
+                            addForm.add();
+                        }
+                    },
+                    edit: {
+                        enabled: true,
+                        action: function(row) {
+                            editForm.edit(row);
+                        }
+                    },
+                    delete: {
+                        enabled: true
                     }
                 },
-                edit: {
+                data: [
+                    [1, "Ross", "Whitehead", true, "Some notes"],
+                    [2, "John", "Smith", false, "Some more notes"],
+                    [3, "Balony", "Sandwich", true, ""],
+                    [4, "Harry", "Karry", true, ""],
+                    [5, "Edward", "Khan", false, ""]
+                ],
+                paging: {
                     enabled: true,
-                    action: function(row) {
-                        editForm.edit(row);
-                    }
-                },
-                delete: {
-                    enabled: true
+                    pageSize: 2
                 }
-            },
-            data: [
-                [1, "Ross", "Whitehead", true],
-                [2, "John", "Smith", false],
-                [3, "Balony", "Sandwich", true],
-                [4, "Harry", "Karry", true],
-                [5, "Edward", "Khan", false]
-            ],
-            paging: {
-                enabled: true,
-                pageSize: 2
-            }
-        };
-        $("#grid").jsGrid(gridConfig);
+            };
+            $("#grid").jsGrid(gridConfig);
+        });
     </script>
 </body>
 

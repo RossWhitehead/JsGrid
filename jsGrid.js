@@ -27,7 +27,6 @@
                     <button type="button" class="btn btn-primary btn-md" id="add-button">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>
                 </div>
-                <img src="~/Content/Images/ajax-loader gif" class="loading-indicator" id="loading-indicator" />
             </div>
         </div>
     </div>`,

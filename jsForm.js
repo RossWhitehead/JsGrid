@@ -8,7 +8,8 @@
         radiobutton: 1,
         readonly: 2,
         select: 3,
-        text: 4
+        text: 4,
+        textArea: 5
     }
 
     const defaultConfig = {};
@@ -57,17 +58,30 @@
                 <label for="{0}">{1}</label>
                 <input type="text" class="form-control" name="{0}" id="{0}">
             </div>`,
+        INPUT_TEXTAREA: `
+            <div class="form-group">
+                <label for="{0}">{1}</label>
+                <textarea rows="{2}" class="form-control" name="{0}" id="{0}">
+            </div>`,
         BUTTON_GROUP: `
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <div>
                 </div>
             </div>`,
-        SAVE_BUTTON: '<button type="button" class="btn btn-default save-button">Save</button>'
+        SAVE_BUTTON: '<button type="button" class="btn btn-primary save-button">Save</button>',
+        CANCEL_BUTTON: '<button type="button" class="btn btn-secondary cancel-button">Cancel</button>'
     };
 
     function ControlFactory() {
-        this.getTemplate = function(type, name, displayName, options) {
+        this.getTemplate = function(field) {
+            var type = field.type;
+            var name = field.name;
+            var displayName = field.displayName;
+            var options = field.options;
+            var rows = field.rows;
+
             var template = null;
+
             switch (type) {
                 case jsForm.controlType.checkbox:
                     return $(String.format(TEMPLATE.INPUT_CHECKBOX, name, displayName));
@@ -89,6 +103,9 @@
                         $select.append(String.format(TEMPLATE.INPUT_SELECT_OPTION, value.value, value.name));
                     });
                     return $template.append($select);
+
+                case jsForm.controlType.textArea:
+                    return $(String.format(TEMPLATE.INPUT_TEXTAREA, name, displayName, rows));
 
                 default:
                     return $(String.format(TEMPLATE.INPUT_TEXT, name, displayName));
@@ -113,15 +130,22 @@
         };
 
         this.edit = function(row) {
-            var $inputs = this.$formContainer.find('form input');
-            $.each($inputs, function(index) {
-                var $input = $(this);
-                if ($input.is(':checkbox')) {
-                    $input.prop('checked', row[index]);
-                } else {
-                    $(this).attr('value', row[index]);
-                }
+            var $formGroups = this.$formContainer.find('div.form-group');
+            $.each($formGroups, function(index) {
+                var $inputs = $(this).find(':input');
+                var groupIndex = index;
+                $.each($inputs, function(index) {
+                    var $input = $(this);
+                    if ($input.is('checkbox')) {
+                        $input.prop('checked', row[groupIndex]);
+                    } else if ($input.is('input')) {
+                        $(this).attr('value', row[groupIndex]);
+                    } else if ($input.is('textarea')) {
+                        $(this).text(row[groupIndex]);
+                    }
+                });
             });
+
             this.$formContainer.show();
         };
 
@@ -144,26 +168,26 @@
             var controlFactory = new ControlFactory();
 
             for (var i = 0; i < config.fields.length; i++) {
-                var $control = controlFactory.getTemplate(
-                    this.config.fields[i].type,
-                    this.config.fields[i].name,
-                    this.config.fields[i].displayName,
-                    this.config.fields[i].options);
+                var $control = controlFactory.getTemplate(this.config.fields[i]);
                 $form.append($control);
             }
 
+            // Buttons
             var buttonGroup = $(TEMPLATE.BUTTON_GROUP);
             var saveButton = $(TEMPLATE.SAVE_BUTTON);
+            var cancelButton = $(TEMPLATE.CANCEL_BUTTON);
+
             this.$formContainer.on('click', '.save-button', function() {
                 self.save();
             });
-            buttonGroup.children('div').append(saveButton);
-            $form.append(buttonGroup);
 
-            // Cancel buttons
             this.$formContainer.on('click', '.cancel-button', function() {
                 self.cancel();
             });
+
+            buttonGroup.children('div').append(cancelButton);
+            buttonGroup.children('div').append(saveButton);
+            $form.append(buttonGroup);
 
             $panelBody.append($form);
 

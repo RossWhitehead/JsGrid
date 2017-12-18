@@ -17,8 +17,6 @@ select {
 }
 
 .form {
-    z-index: 1002;
-    position: relative;
     border: none;
 }
 
@@ -37,6 +35,7 @@ select {
 
 .add-panel,
 .edit-panel {
+    z-index: 1002;
     position: absolute;
     top: 105px;
     width: 400px;
@@ -49,4 +48,42 @@ select {
 .form input[readonly="readonly"] {
     border: 0;
     background-color: white;
+}
+
+.checkbox {
+    padding-bottom: 10px;
+}
+
+.closeIcon {
+    cursor: pointer;
+}
+
+div .radio {
+    display: block;
+}
+
+form .btn {
+    margin: 5px;
+}
+
+.list-panel {
+    margin-top: 20px;
+}
+
+.list-panel .panel-heading {
+    overflow: auto;
+    padding: 5px 20px;
+}
+
+.list-panel .panel-title {
+    float: left;
+    margin-top: 10px;
+}
+
+.list-panel .panel-footer {
+    padding: 5px 20px;
+}
+
+.list-panel .refresh-button {
+    float: right;
 }
