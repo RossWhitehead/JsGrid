@@ -50,34 +50,41 @@
                 fields: [{
                     name: "id",
                     displayName: "Id",
-                    type: jsForm.controlType.readonly
+                    type: jsForm.controlType.readonly,
+                    position: 0
                 }, {
                     name: "firstName",
                     displayName: "First name",
-                    type: jsForm.controlType.text
+                    type: jsForm.controlType.text,
+                    position: 1
                 }, {
                     name: "lastName",
                     displayName: "Last name",
-                    type: jsForm.controlType.text
+                    type: jsForm.controlType.text,
+                    position: 2
                 }, {
                     name: "isRegistered",
                     displayName: "Registered?",
-                    type: jsForm.controlType.checkbox
+                    type: jsForm.controlType.checkbox,
+                    position: 3
                 }, {
                     name: "age",
                     displayName: "Age?",
                     type: jsForm.controlType.select,
-                    options: ageOptions
+                    options: ageOptions,
+                    position: 4
                 }, {
                     name: "gender",
                     displayName: "Gender?",
                     type: jsForm.controlType.radiobutton,
-                    options: genderOptions
+                    options: genderOptions,
+                    position: 5
                 }, {
                     name: "notes",
                     displayName: "Notes",
                     type: jsForm.controlType.textArea,
-                    rows: 3
+                    rows: 3,
+                    position: 6
                 }],
                 post: {
                     url: "http://www.hdgdhfjdf.com/person/edit",

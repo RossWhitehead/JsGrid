@@ -167,6 +167,13 @@
 
             var controlFactory = new ControlFactory();
 
+            // Sort the fields by position
+            var sortedFields = config.fields.sort(function(a, b) {
+                var aPos = a.position === undefined ? 999999 : a.position;
+                var bPos = b.position === undefined ? 999999 : b.position;
+                return aPos - bPos;
+            });
+
             for (var i = 0; i < config.fields.length; i++) {
                 var $control = controlFactory.getTemplate(this.config.fields[i]);
                 $form.append($control);
