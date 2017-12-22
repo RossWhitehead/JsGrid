@@ -14,8 +14,7 @@
     const nextButtonId = 'next-button';
 
     const TEMPLATE = {
-        TABLE_PANEL: `<div class="row">
-        <div class="col-md-12">
+        TABLE_PANEL: `
             <div class="panel panel-primary list-panel" id="list-panel">
                 <div class="panel-heading list-panel-heading">
                     <h3 class="panel-title list-panel-title">Products</h3>
@@ -27,9 +26,7 @@
                     <button type="button" class="btn btn-primary btn-md" id="add-button">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>
                 </div>
-            </div>
-        </div>
-    </div>`,
+            </div>`,
         TABLE: '<table class="table">',
         THEAD: '<thead>',
         TBODY: '<tbody>',

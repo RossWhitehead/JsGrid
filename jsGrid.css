@@ -1,3 +1,52 @@
+* {
+    margin: 0;
+    padding: 5px;
+}
+
+
+/* CSS Grid */
+
+.grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-areas: "title" "header" "footer" "sidebar" "content";
+    grid-auto-rows: minmax(200px, auto);
+    grid-gap: 10px;
+}
+
+.grid .title {
+    grid-area: title
+}
+
+.grid .header {
+    grid-area: header
+}
+
+.grid .sidebar {
+    grid-area: sidebar
+}
+
+.grid .content {
+    grid-area: content
+}
+
+.grid .footer {
+    grid-area: footer
+}
+
+.grid>div {
+    border: solid 0.5px;
+}
+
+@media screen and (min-width: 736px) {
+    .grid {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        grid-template-areas: "title title" "header header" "sidebar content" "footer footer";
+        grid-auto-rows: minmax(100px, auto);
+    }
+}
+
 select {
     height: 30px;
     display: block;
@@ -37,7 +86,7 @@ select {
 .edit-panel {
     z-index: 1002;
     position: absolute;
-    top: 105px;
+    top: 55px;
     width: 400px;
     margin: auto;
     left: 50%;
