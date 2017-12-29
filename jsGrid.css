@@ -1,56 +1,60 @@
 * {
     margin: 0;
-    padding: 5px;
+    font-family: 'Roboto Slab', serif;
 }
 
 
-/* CSS Grid */
+/* Page layout */
 
 .grid {
     display: grid;
     grid-template-columns: auto;
-    grid-template-areas: "title" "header" "footer" "sidebar" "content";
+    grid-template-areas: "header" "title" "footer" "sidebar" "content";
     grid-auto-rows: minmax(200px, auto);
     grid-gap: 10px;
 }
 
+.grid .header,
+.grid .footer,
 .grid .title {
-    grid-area: title
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid .header,
+.grid .footer {
+    background: black;
+    color: whitesmoke;
 }
 
 .grid .header {
-    grid-area: header
+    grid-area: header;
+}
+
+.grid .title {
+    grid-area: title;
+    flex-direction: column;
 }
 
 .grid .sidebar {
-    grid-area: sidebar
+    grid-area: sidebar;
 }
 
 .grid .content {
-    grid-area: content
+    grid-area: content;
 }
 
 .grid .footer {
-    grid-area: footer
+    grid-area: footer;
 }
 
 .grid>div {
     border: solid 0.5px;
 }
 
-@media screen and (min-width: 736px) {
-    .grid {
-        display: grid;
-        grid-template-columns: 200px 1fr;
-        grid-template-areas: "title title" "header header" "sidebar content" "footer footer";
-        grid-auto-rows: minmax(100px, auto);
-    }
-}
 
-select {
-    height: 30px;
-    display: block;
-}
+/* Modal backdrop - disables all other elements when form is visible */
 
 .modal-backdrop {
     display: block;
@@ -61,46 +65,76 @@ select {
     width: 100%;
     height: 100%;
     background-color: white;
-    opacity: .50;
-    filter: alpha(opacity=50);
+    opacity: .70;
+    filter: alpha(opacity=70);
 }
 
-.form {
+
+/* Table */
+
+.list-panel {
     border: none;
 }
 
-.form-horizontal .form-group {
-    margin-left: 0px;
-    margin-right: 0px;
+.list-panel .panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 5px 20px;
 }
 
-.panel-heading {
-    padding: 10px 20px;
+.list-panel .panel-footer {
+    padding: 5px 20px;
 }
 
-.panel-body {
-    padding: 20px 20px 10px 20px;
+
+/* Form */
+
+.form {
+    display: grid;
+    grid-template-columns: 1f;
+    grid-gap: 5px;
+    border: none;
 }
 
-.add-panel,
-.edit-panel {
-    z-index: 1002;
-    position: absolute;
-    top: 55px;
-    width: 400px;
-    margin: auto;
-    left: 50%;
-    margin-left: -200px;
+.form button {
+    margin-right: 5px;
+}
+
+.form .form-control,
+.form .checkbox-inline {
+    margin: 5px 0px 10px 0px;
+}
+
+.form label {
+    margin: 0;
 }
 
 .form input[readonly],
 .form input[readonly="readonly"] {
     border: 0;
-    background-color: white;
 }
 
-.checkbox {
-    padding-bottom: 10px;
+.edit-panel {
+    z-index: 1002;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    max-width: 90%;
+    max-height: 100%;
+}
+
+.edit-panel .panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.edit-panel .panel-body {
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
 }
 
 .closeIcon {
@@ -111,28 +145,26 @@ div .radio {
     display: block;
 }
 
-form .btn {
-    margin: 5px;
-}
-
-.list-panel {
-    margin-top: 20px;
-}
-
-.list-panel .panel-heading {
-    overflow: auto;
-    padding: 5px 20px;
-}
-
-.list-panel .panel-title {
-    float: left;
-    margin-top: 10px;
-}
-
-.list-panel .panel-footer {
-    padding: 5px 20px;
-}
-
-.list-panel .refresh-button {
-    float: right;
+@media screen and (min-width: 736px) {
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 200px 5fr 1fr;
+        grid-template-areas: ". header header ." ". title title ." ". sidebar content ." ". footer footer .";
+        grid-auto-rows: minmax(100px, auto);
+    }
+    .form {
+        display: grid;
+        grid-template-columns: 1f 2f;
+        grid-gap: 20px;
+    }
+    .form .form-label {
+        grid-column: 1 / 2;
+    }
+    .form .form-control {
+        grid-column: 2 / 3;
+    }
+    .form .button-group {
+        grid-column: 2 / 3;
+        padding-left: 0;
+    }
 }

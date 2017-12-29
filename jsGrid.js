@@ -18,12 +18,12 @@
             <div class="panel panel-primary list-panel" id="list-panel">
                 <div class="panel-heading list-panel-heading">
                     <h3 class="panel-title list-panel-title">Products</h3>
-                    <button type="button" class="btn btn-default btn-md refresh-button">
+                    <button type="button" class="btn btn-default btn-sm refresh-button">
                             <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh</button>
                 </div>
                 <div class="panel-body"></div>
                 <div class="panel-footer">
-                    <button type="button" class="btn btn-primary btn-md" id="add-button">
+                    <button type="button" class="btn btn-primary btn-sm" id="add-button">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>
                 </div>
             </div>`,
@@ -35,9 +35,9 @@
         TD: '<td>{0}</td>',
         PAGE: '<span>Page {0}</span>',
         PAGING_BUTTONS: '<div>',
-        NEXT_BUTTON: String.format('<button id="{0}" class="btn btn-default">Next</button>', nextButtonId),
-        PREVIOUS_BUTTON: String.format('<button id="{0}" class="btn btn-default">Previous</button>', previousButtonId),
-        EDIT_BUTTON: '<button id="{0}" class="btn btn-default" data-row-number="{1}">Edit</button>'
+        NEXT_BUTTON: String.format('<button id="{0}" class="btn btn-sm btn-default">Next</button>', nextButtonId),
+        PREVIOUS_BUTTON: String.format('<button id="{0}" class="btn btn-sm btn-default">Previous</button>', previousButtonId),
+        EDIT_BUTTON: '<button id="{0}" class="btn btn-sm btn-default" data-row-number="{1}">Edit</button>'
     };
 
     var $container = null;

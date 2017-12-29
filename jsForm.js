@@ -24,49 +24,26 @@
     const TEMPLATE = {
         MODAL_BACKDROP: '<div class="modal-backdrop"></div>',
         FORM_PANEL: `
-            <div class="panel panel-info edit-panel" id="edit-panel">
+            <div class="panel panel-info edit-panel">
                 <div class="panel-heading">
+                    <h2 class="panel-title">{0}</h2>
                     <span class="closeIcon cancel-button">
                         <span class="glyphicon glyphicon-remove"></span>
                     </span>
-                    <h2 class="panel-title"></h2>
                 </div>
                 <div class="panel-body"></div>
             </div>`,
         FORM: '<form class="form form-horizontal">',
-        CONTROL_GROUP: `
-            <div class="form-group">
-                <label for="{0}">{1}</label>
-            </div>`,
-        INPUT_CHECKBOX: `
-            <div class="checkbox">
-                <label><input type="checkbox" value="" name="{0}" id="{0}">{1}</label>
-            </div>`,
-        INPUT_RADIOBUTTON: `
-            <div class="radio">
-                <label><input type="radio" name="{0}" value="{1}">{2}</label>
-            </div>`,
-        INPUT_READONLY: `
-            <div class="form-group">
-                <label for="{0}">{1}</label>
-                <input type="text" class="form-control" name="{0}" id="{0}" readonly>
-            </div>`,
+        INPUT_LABEL: '<label class="form-label" for="{0}">{1}</label>',
+        INPUT_CHECKBOX: '<input class="checkbox-inline" type="checkbox" value="" name="{0}" id="{0}">',
+        INPUT_RADIOBUTTON: '<label class="form-control"><input type="radio" name="{0}" value="{1}">{2}</label>',
+        INPUT_READONLY: '<input type="text" class="form-control-plaintext" name="{0}" id="{0}" readonly>',
         INPUT_SELECT: '<select class="form-control" name="{0}" id="{0}">',
         INPUT_SELECT_OPTION: '<option value="{0}">{1}</option>',
-        INPUT_TEXT: `
-            <div class="form-group">
-                <label for="{0}">{1}</label>
-                <input type="text" class="form-control" name="{0}" id="{0}">
-            </div>`,
-        INPUT_TEXTAREA: `
-            <div class="form-group">
-                <label for="{0}">{1}</label>
-                <textarea rows="{2}" class="form-control" name="{0}" id="{0}">
-            </div>`,
+        INPUT_TEXT: '<input type="text" class="form-control" name="{0}" id="{0}">',
+        INPUT_TEXTAREA: '<textarea rows="{2}" class="form-control" name="{0}" id="{0}">',
         BUTTON_GROUP: `
-            <div class="form-group">
-                <div>
-                </div>
+            <div class="button-group">
             </div>`,
         SAVE_BUTTON: '<button type="button" class="btn btn-primary save-button">Save</button>',
         CANCEL_BUTTON: '<button type="button" class="btn btn-secondary cancel-button">Cancel</button>'
@@ -80,35 +57,33 @@
             var options = field.options;
             var rows = field.rows;
 
-            var template = null;
+            var $label = $(String.format(TEMPLATE.INPUT_LABEL, name, displayName));
 
             switch (type) {
                 case jsForm.controlType.checkbox:
-                    return $(String.format(TEMPLATE.INPUT_CHECKBOX, name, displayName));
+                    return $label.add($(String.format(TEMPLATE.INPUT_CHECKBOX, name)));
 
                 case jsForm.controlType.radiobutton:
-                    var $template = $(String.format(TEMPLATE.CONTROL_GROUP, name, displayName));
                     $.each(options, function(index, value) {
-                        $template.append(String.format(TEMPLATE.INPUT_RADIOBUTTON, name, value.value, value.name));
+                        $label.add($(String.format(TEMPLATE.INPUT_RADIOBUTTON, name, value.value, value.name)));
                     });
-                    return $template;
+                    return $label;
 
                 case jsForm.controlType.readonly:
-                    return $(String.format(TEMPLATE.INPUT_READONLY, name, displayName));
+                    return $label.add($(String.format(TEMPLATE.INPUT_READONLY, name, displayName)));
 
                 case jsForm.controlType.select:
-                    var $template = $(String.format(TEMPLATE.CONTROL_GROUP, name, displayName));
                     var $select = $(String.format(TEMPLATE.INPUT_SELECT, name, displayName));
                     $.each(options, function(index, value) {
                         $select.append(String.format(TEMPLATE.INPUT_SELECT_OPTION, value.value, value.name));
                     });
-                    return $template.append($select);
+                    return $label.add($select);
 
                 case jsForm.controlType.textArea:
-                    return $(String.format(TEMPLATE.INPUT_TEXTAREA, name, displayName, rows));
+                    return $label.add($(String.format(TEMPLATE.INPUT_TEXTAREA, name, displayName, rows)));
 
                 default:
-                    return $(String.format(TEMPLATE.INPUT_TEXT, name, displayName));
+                    return $label.add($(String.format(TEMPLATE.INPUT_TEXT, name, displayName)));
             }
         }
     }
@@ -159,7 +134,7 @@
             var $modalBackdrop = $(TEMPLATE.MODAL_BACKDROP);
             this.$formContainer.append($modalBackdrop);
 
-            var $formPanel = $.parseHTML(TEMPLATE.FORM_PANEL);
+            var $formPanel = $.parseHTML(String.format(TEMPLATE.FORM_PANEL, config.title));
             this.$formContainer.append($formPanel);
             var $panelBody = this.$formContainer.find('.panel-body');
 
@@ -192,8 +167,8 @@
                 self.cancel();
             });
 
-            buttonGroup.children('div').append(cancelButton);
-            buttonGroup.children('div').append(saveButton);
+            buttonGroup.append(saveButton);
+            buttonGroup.append(cancelButton);
             $form.append(buttonGroup);
 
             $panelBody.append($form);
