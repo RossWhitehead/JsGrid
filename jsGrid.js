@@ -84,7 +84,7 @@
 
             // Add button
             if (config.actions.add.enabled === true) {
-                $container.on('click', '#add-button', function() {
+                $container.on('click', '#add-button', function(event) {
                     if ($.isFunction(config.actions.add.action)) {
                         console.log(event.target);
                         config.actions.add.action();
@@ -127,7 +127,7 @@
                 var id = "edit" + row;
                 var $td = $(String.format(TEMPLATE.TD, ""));
                 var $editButton = $(String.format(TEMPLATE.EDIT_BUTTON, id, row));
-                $container.on('click', '#' + id, function() {
+                $container.on('click', '#' + id, function(event) {
                     if ($.isFunction(config.actions.edit.action)) {
                         console.log(event.target);
                         var rowNumber = $(event.target).data("row-number");
