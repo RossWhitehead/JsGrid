@@ -22,6 +22,12 @@
                             <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Refresh</button>
                 </div>
                 <div class="panel-body"></div>
+                <nav>
+                    <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
                 <div class="panel-footer">
                     <button type="button" class="btn btn-primary btn-sm" id="add-button">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button>
