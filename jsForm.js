@@ -88,6 +88,7 @@
         }
     }
 
+    // Edit form view model
     var Form = function(config) {
         this.$formContainer = null;
         this.config = config;

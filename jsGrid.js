@@ -24,8 +24,8 @@
                 <div class="panel-body"></div>
                 <nav>
                     <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
                     </ul>
                 </nav>
                 <div class="panel-footer">
@@ -40,6 +40,7 @@
         TR: '<tr>',
         TD: '<td>{0}</td>',
         PAGE: '<span>Page {0}</span>',
+        PAGING_ITEM: '<li class="page-item"><a class="page-link" href="#">Previous</a></li>',
         PAGING_BUTTONS: '<div>',
         NEXT_BUTTON: String.format('<button id="{0}" class="btn btn-sm btn-default">Next</button>', nextButtonId),
         PREVIOUS_BUTTON: String.format('<button id="{0}" class="btn btn-sm btn-default">Previous</button>', previousButtonId),
@@ -95,8 +96,10 @@
             }
 
             // Render the paging buttons
+            var $pageList = $container.find('ul.pagination');
             renderPagingButtons(config, page);
-            $container.append($pagingButtons);
+
+            //$container.append($pagingButtons);
 
             //$container.append(String.format(TEMPLATE.PAGE, page + 1));
         });
@@ -144,6 +147,8 @@
     }
 
     function renderPagingButtons(config, page) {
+        const pageCount = Math.ceil(config.data.length / config.paging.pageSize);
+
         const pageSize = config.paging.pageSize;
         const pageStart = page * pageSize;
         const pageEnd = Math.min(pageStart + pageSize, config.data.length);

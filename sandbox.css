@@ -14,3 +14,30 @@
 .card:hover {
     transform: rotateX(180deg);
 }
+
+.floatleft {
+    float: left;
+}
+
+.floatright {
+    float: right;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+#topbar {
+    border: solid;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.centered-heading {
+    text-align: center;
+    margin: auto;
+    line-height: 1.5;
+}
